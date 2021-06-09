@@ -1,0 +1,1 @@
+# alfresco7.xga-solr-dist-setup
