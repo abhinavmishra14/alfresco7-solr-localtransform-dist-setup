@@ -1,0 +1,1 @@
+#This folder is for copying content of amps from distribution package.

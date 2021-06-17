@@ -1,0 +1,1 @@
+#This folder is for copying content of alfresco-pdf-renderer folder from distribution package.

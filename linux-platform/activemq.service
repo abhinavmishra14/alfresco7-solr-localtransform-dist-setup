@@ -1,0 +1,19 @@
+[Unit]
+Description=ActiveMQ service
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/alfresco-community70/activemq/bin/activemq start
+ExecStop=/usr/local/alfresco-community70/activemq/bin/activemq stop
+User=alfresco
+Group=Alfresco
+WorkingDirectory=~/usr/local/alfresco-community70/activemq/data
+Restart=always
+RestartSec=9
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=activemq
+
+[Install]
+WantedBy=multi-user.target

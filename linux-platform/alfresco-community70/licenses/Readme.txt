@@ -1,0 +1,1 @@
+#This folder is for copying the contents of licenses folder from distribution package.

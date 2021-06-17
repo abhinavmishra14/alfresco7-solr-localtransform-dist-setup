@@ -1,0 +1,1 @@
+#This folder is for copying content of bin folder from distribution package.
