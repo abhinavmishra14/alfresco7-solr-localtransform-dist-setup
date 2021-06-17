@@ -71,7 +71,7 @@ StartDB() {
 	
 	if [[ $? = 0 ]]
         then
-	   echo "postgresql-11.service started successfully."
+	   echo "postgresql-13.service started successfully."
 	else
 	   echo "Failed to start postgresql-13.service!"
 	   exit 1

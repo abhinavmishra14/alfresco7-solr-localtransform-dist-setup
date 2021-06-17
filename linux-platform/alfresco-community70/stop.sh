@@ -75,7 +75,7 @@ StopDB() {
 	
 	if [[ $? = 0 ]]
         then
-	   echo "postgresql-11.service stopped successfully."
+	   echo "postgresql-13.service stopped successfully."
 	else
 	   echo "Failed to stop postgresql-13.service!"
 	   exit 1
