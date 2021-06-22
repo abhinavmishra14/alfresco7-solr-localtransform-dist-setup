@@ -56,8 +56,8 @@ SET POSTGRES_INSTALL_PATH=%3
 :stopAMQLocal
     echo.
 	echo Stopping Active MQ service ...
-	taskkill /fi "WINDOWTITLE eq ActiveMQ"
 	taskkill /F /IM wrapper.exe
+	taskkill /fi "WINDOWTITLE eq ActiveMQ"
     if errorlevel 1 (goto end)
 	
 :end
