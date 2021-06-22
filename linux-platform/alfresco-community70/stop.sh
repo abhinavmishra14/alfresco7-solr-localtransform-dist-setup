@@ -54,6 +54,10 @@ echo SOLR_HOME: $SOLR_HOME
 echo ALF_HOME: $ALF_HOME
 echo "---------------------------------------------"
 
+StopLocalTransformService() {
+   printf "\nStopping LocalTransformService... \n"
+
+}
 
 StopACS() {
         printf "\nShutting down Alfresco Tomcat... \n"
@@ -108,11 +112,26 @@ StopSOLR() {
         fi
 }
 
+StopAMQ() {
+	printf "\nStopping ActiveMQ... \n"
+	sudo sudo systemctl stop activemq
+	
+	if [[ $? = 0 ]]
+	then
+           echo "activemq service stopped successfully."
+	else
+	   echo "Failed to stop activemq service!"
+	   exit 1
+        fi
+}
+
 
 ###################################
 
+StopLocalTransformService
 StopACS
 StopDB
 StopSOLR
+StopAMQ
 
 ###################################

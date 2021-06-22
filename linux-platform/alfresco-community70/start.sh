@@ -53,6 +53,9 @@ JAVA_OPTS="${JAVA_OPTS} -Djava.io.tmpdir=${CATALINA_TMPDIR}"
 JAVA_OPTS="${JAVA_OPTS} -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
 JAVA_OPTS="${JAVA_OPTS} -Dalfresco.home=${ALF_HOME} -Dcom.sun.management.jmxremote=true"
 JAVA_OPTS="${JAVA_OPTS} -server"
+#Used for metadata keystore. Added here as well apart from catalina.sh in case you want to use this startup script,
+#and modify the dir.keystore path here.
+JAVA_TOOL_OPTIONS="-Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=${dir.keystore}/metadata-keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede"
 
 
 echo "-------------------------------------------"
@@ -64,6 +67,43 @@ echo PATH: $PATH
 echo SOLR_HOME: $SOLR_HOME
 echo ALF_HOME: $ALF_HOME
 echo "-------------------------------------------"
+
+
+StartAMQ() {
+	printf "\nStarting ActiveMQ... \n"
+	sudo sudo systemctl start activemq
+	
+	if [[ $? = 0 ]]
+	then
+           echo "activemq service started successfully."
+	else
+	   echo "Failed to start activemq service!"
+	   exit 1
+        fi
+}
+
+StartLocalTransformService() {
+	printf "\nStarting LocalTransformService... \n"
+	# Check for more info: https://docs.alfresco.com/transform-service/latest/install/#install-with-zip
+	
+	java -DPDFRENDERER_EXE="$ALF_HOME/alfresco-pdf-renderer/alfresco-pdf-renderer" \
+	 -DLIBREOFFICE_HOME="$ALF_HOME/libreoffice" \
+	 -DIMAGEMAGICK_ROOT="$ALF_HOME/imagemagick" \
+	 -DIMAGEMAGICK_DYN="$ALF_HOME/imagemagick" \
+	 -DIMAGEMAGICK_EXE="$ALF_HOME/imagemagick/convert" \
+	 -DIMAGEMAGICK_CODERS="$ALF_HOME/imagemagick/modules-Q16HDRI/coders" \
+	 -DIMAGEMAGICK_CONFIG="$ALF_HOME/imagemagick/config-Q16HDRI" \
+	 -DACTIVEMQ_URL=failover:(tcp://localhost:61616)?timeout=3000 \
+	 -jar $ALF_HOME/bin/alfresco-transform-core-aio-boot-2.4.0.jar
+
+	if [[ $? = 0 ]]
+	then
+           echo "localTransformService service started successfully."
+	else
+	   echo "Failed to start localTransformService service!"
+	   exit 1
+        fi
+}
 
 StartDB() {
 	printf "\nStarting Postgresql... \n"
@@ -144,6 +184,8 @@ StartSOLR() {
 
 ###################################
 
+StartAMQ
+StartLocalTransformService
 StartDB
 StartACS
 StartSOLR
