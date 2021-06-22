@@ -1,6 +1,6 @@
 @echo off
 
-ECHO ################ Stopping ACS, DB and Solr Services ##############
+ECHO ################ Stopping ACS, DB, Local Transformation Service and Solr Services ##############
 ECHO.
 
 SET ALF_INSTALL_PATH=%1
@@ -34,8 +34,8 @@ SET POSTGRES_INSTALL_PATH=%3
 	SET CATALINA_HOME=%ALF_INSTALL_PATH%\tomcat
 	start /MIN /WAIT cmd /c %ALF_INSTALL_PATH%\tomcat\bin\catalina.bat stop
 	taskkill /fi "WINDOWTITLE eq Tomcat"
-	taskkill /fi "WINDOWTITLE eq LibreOffice"
-	taskkill /IM soffice.bin
+	taskkill /F /IM soffice.bin
+	taskkill /F /IM LibreOffice
 	if errorlevel 1 (goto end) else (goto stopDB)
 
 :stopDB
@@ -58,7 +58,7 @@ SET POSTGRES_INSTALL_PATH=%3
     echo.
 	echo Stopping Active MQ service ...
 	taskkill /fi "WINDOWTITLE eq ActiveMQ"
-	taskkill /fi "WINDOWTITLE eq wrapper.exe"
+	taskkill /F /IM wrapper.exe
     if errorlevel 1 (goto end)
 	
 :end

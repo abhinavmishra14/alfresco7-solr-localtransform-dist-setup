@@ -1,6 +1,6 @@
 @echo off
 
-ECHO ################ Starting ACS, DB and Solr Services ##############
+ECHO ################ Starting ACS, DB, Local Transformation Service and Solr Services ##############
 ECHO.
 
 
