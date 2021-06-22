@@ -1,0 +1,1 @@
+#This folder is install location of tomcat. Contains basic setup needed for acs62-ga by default. You can override while following the setup instructions. Files are kept here for reference only.

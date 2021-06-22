@@ -1,0 +1,1 @@
+#This folder is for copying the contents of alf_data\keystore folder from distribution package.

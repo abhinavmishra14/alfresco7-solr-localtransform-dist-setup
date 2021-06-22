@@ -1,0 +1,1 @@
+#This folder is for copying content of alf_data from distribution package.
