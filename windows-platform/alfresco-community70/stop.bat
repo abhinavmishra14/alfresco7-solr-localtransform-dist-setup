@@ -35,7 +35,6 @@ SET POSTGRES_INSTALL_PATH=%3
 	start /MIN /WAIT cmd /c %ALF_INSTALL_PATH%\tomcat\bin\catalina.bat stop
 	taskkill /fi "WINDOWTITLE eq Tomcat"
 	taskkill /F /IM soffice.bin
-	taskkill /F /IM LibreOffice
 	if errorlevel 1 (goto end) else (goto stopDB)
 
 :stopDB

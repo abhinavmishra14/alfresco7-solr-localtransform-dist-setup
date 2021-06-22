@@ -218,7 +218,7 @@ set "JAVA_OPTS=%JAVA_OPTS% %JSSE_OPTS%"
 rem Register custom URL handlers
 rem Do this here so custom URL handles (specifically 'war:...') can be used in the security policy
 set "JAVA_OPTS=%JAVA_OPTS% -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Xms4g -Xmx4g"
-set "JAVA_TOOL_OPTIONS=-Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=C:/alfresco-community70/tomcat/shared/classes/alfresco/extension/keystore/metadata-keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede"
+set "JAVA_TOOL_OPTIONS=-Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=${dir.keystore}/metadata-keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede"
 rem Check for the deprecated LOGGING_CONFIG
 rem Only use it if CATALINA_LOGGING_CONFIG is not set and LOGGING_CONFIG starts with "-D..."
 if not "%LOGGING_CONFIG:~0,2%"=="-D" goto noLoggingDeprecation

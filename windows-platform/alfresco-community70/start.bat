@@ -20,7 +20,7 @@ SET POSTGRES_INSTALL_PATH=%3
 	IF "%~3" == "" (
 		SET POSTGRES_INSTALL_PATH=C:\\PostgreSQL\\13
 	)
-	
+
 	goto startAMQLocal
 
 :startAMQLocal
@@ -34,6 +34,9 @@ SET POSTGRES_INSTALL_PATH=%3
 :startTrServLocal
     echo.
 	echo Starting Local transformation service..
+	#Set the exiftool directorypath, used by tikaparser part of transformation service
+	SET EXIFTOOL_FOLDER=%ALF_INSTALL_PATH%\\exiftool
+	
 	start "localTransformationService" java -DPDFRENDERER_EXE="%ALF_INSTALL_PATH%\\alfresco-pdf-renderer\\alfresco-pdf-renderer.exe"^
 		-DLIBREOFFICE_HOME="%ALF_INSTALL_PATH%\\libreoffice"^
 		-DIMAGEMAGICK_ROOT="%ALF_INSTALL_PATH%\\imagemagick\\ImageMagick-7.1.0-Q16-HDRI"^
