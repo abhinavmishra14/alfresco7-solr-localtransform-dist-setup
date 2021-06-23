@@ -2,7 +2,7 @@
 #
 # pgAdmin 4 - PostgreSQL Tools
 #
-# Copyright (C) 2013 - 2020, The pgAdmin Development Team
+# Copyright (C) 2013 - 2021, The pgAdmin Development Team
 # This software is released under the PostgreSQL Licence
 #
 ##########################################################################
@@ -16,6 +16,8 @@ import os
 import sys
 import builtins
 
+USER_NOT_FOUND = "The specified user ID (%s) could not be found."
+
 # Grab the SERVER_MODE if it's been set by the runtime
 if 'SERVER_MODE' in globals():
     builtins.SERVER_MODE = globals()['SERVER_MODE']
@@ -28,9 +30,9 @@ root = os.path.dirname(os.path.realpath(__file__))
 if sys.path[0] != root:
     sys.path.insert(0, root)
 
-from pgadmin import create_app
 from pgadmin.model import db, User, Version, ServerGroup, Server, \
     SCHEMA_VERSION as CURRENT_SCHEMA_VERSION
+from pgadmin import create_app
 
 
 def add_value(attr_dict, key, value):
@@ -78,8 +80,7 @@ def dump_servers(args):
         user = User.query.filter_by(email=dump_user).first()
 
         if user is None:
-            print("The specified user ID (%s) could not be found." %
-                  dump_user)
+            print(USER_NOT_FOUND % dump_user)
             sys.exit(1)
 
         user_id = user.id
@@ -181,18 +182,25 @@ def _validate_servers_data(data, is_admin):
             if attrib not in obj:
                 return ("'%s' attribute not found for server '%s'" %
                         (attrib, server))
+            return None
 
-        check_attrib("Name")
-        check_attrib("Group")
+        for attrib in ("Group", "Name"):
+            errmsg = check_attrib(attrib)
+            if errmsg:
+                return errmsg
 
         is_service_attrib_available = obj.get("Service", None) is not None
 
         if not is_service_attrib_available:
-            check_attrib("Port")
-            check_attrib("Username")
+            for attrib in ("Port", "Username"):
+                errmsg = check_attrib(attrib)
+                if errmsg:
+                    return errmsg
 
-        check_attrib("SSLMode")
-        check_attrib("MaintenanceDB")
+        for attrib in ("SSLMode", "MaintenanceDB"):
+            errmsg = check_attrib(attrib)
+            if errmsg:
+                return errmsg
 
         if "Host" not in obj and "HostAddr" not in obj and not \
                 is_service_attrib_available:
@@ -243,8 +251,7 @@ def load_servers(args):
         user = User.query.filter_by(email=load_user).first()
 
         if user is None:
-            print("The specified user ID (%s) could not be found." %
-                  load_user)
+            print(USER_NOT_FOUND % load_user)
             sys.exit(1)
 
         user_id = user.id
@@ -398,6 +405,51 @@ def setup_db():
             os.chmod(config.SQLITE_PATH, 0o600)
 
 
+def clear_servers():
+    """Clear groups and servers configurations.
+
+    Args:
+        args (ArgParser): The parsed command line options
+    """
+
+    # What user?
+    load_user = args.user if args.user is not None else config.DESKTOP_USER
+
+    # And the sqlite path
+    if args.sqlite_path is not None:
+        config.SQLITE_PATH = args.sqlite_path
+
+    app = create_app(config.APP_NAME + '-cli')
+    with app.app_context():
+        user = User.query.filter_by(email=load_user).first()
+
+        if user is None:
+            print(USER_NOT_FOUND % load_user)
+            sys.exit(1)
+
+        user_id = user.id
+
+        # Remove all servers
+        servers = Server.query.filter_by(user_id=user_id)
+        for server in servers:
+            db.session.delete(server)
+
+        # Remove all groups
+        groups = ServerGroup.query.filter_by(user_id=user_id)
+        for group in groups:
+            db.session.delete(group)
+        servers = Server.query.filter_by(user_id=user_id)
+
+        for server in servers:
+            db.session.delete(server)
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            print("Error clearing server configuration with error (%s)" %
+                  str(e))
+
+
 if __name__ == '__main__':
     # Configuration settings
     import config
@@ -415,7 +467,11 @@ if __name__ == '__main__':
     imp_group = parser.add_argument_group('Load server config')
     imp_group.add_argument('--load-servers', metavar="INPUT_FILE",
                            help='Load servers into the DB', required=False)
+    imp_group.add_argument('--replace', dest='replace', action='store_true',
+                           help='replace server configurations',
+                           required=False)
 
+    imp_group.set_defaults(replace=False)
     # Common args
     parser.add_argument('--sqlite-path', metavar="PATH",
                         help='Dump/load with the specified pgAdmin config DB'
@@ -442,6 +498,8 @@ if __name__ == '__main__':
             print(str(e))
     elif args.load_servers is not None:
         try:
+            if args.replace:
+                clear_servers()
             load_servers(args)
         except Exception as e:
             print(str(e))
