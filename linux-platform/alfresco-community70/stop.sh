@@ -1,9 +1,11 @@
 #!/bin/bash
 
 #Order of operation
+## - Stop LocalTransformService
 ## - Stop ACS
 ## - Stop DB
 ## - Stop Solr
+## - Stop AMQ
 
 printf "\n------------------------------ Stopping services ------------------------- \n"
 
@@ -47,9 +49,9 @@ echo "---------------------------------------------"
 echo CATALINA_HOME: $CATALINA_HOME
 echo CATALINA_TMPDIR: $CATALINA_TMPDIR
 echo JRE_HOME: $JRE_HOME
-echo PATH: $PATH
 echo SOLR_HOME: $SOLR_HOME
 echo ALF_HOME: $ALF_HOME
+echo PATH: $PATH
 echo "---------------------------------------------"
 
 StopLocalTransformService() {

@@ -1,6 +1,8 @@
 #!/bin/bash
 
 #Order of operation
+## - Start AMQ
+## - Start LocalTransformationService
 ## - Start DB
 ## - Start ACS
 ## - Start SOLR
@@ -43,6 +45,8 @@ fi
 #User need to pass this param on initial startup in order to create the cores. if core values are not passed then default 'alfresco and archive' will be used.
 SOLR_CORES=${3:-"alfresco,archive"}
 
+#Set the exiftool path in PATH variable.
+export PATH=$PATH:$ALF_HOME/exiftool
 
 JAVA_OPTS="-Xms3G -Xmx4G -Xss1024k"
 JAVA_OPTS="${JAVA_OPTS} -XX:+UseG1GC -XX:+UseStringDeduplication"
@@ -61,9 +65,9 @@ echo CATALINA_HOME: $CATALINA_HOME
 echo CATALINA_TMPDIR: $CATALINA_TMPDIR
 echo JRE_HOME: $JRE_HOME
 echo JAVA_OPTS: $JAVA_OPTS
-echo PATH: $PATH
 echo SOLR_HOME: $SOLR_HOME
 echo ALF_HOME: $ALF_HOME
+echo PATH: $PATH
 echo "-------------------------------------------"
 
 
