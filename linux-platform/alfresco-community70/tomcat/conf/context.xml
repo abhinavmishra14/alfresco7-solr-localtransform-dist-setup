@@ -21,23 +21,14 @@
     <!-- Default set of monitored resources. If one of these changes, the    -->
     <!-- web application will be reloaded.                                   -->
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
     <!--
     <Manager pathname="" />
     -->
-    
-   <!-- 
-        If you see error like this in log, then either increase the resource caching or disable it.
-
-	org.apache.catalina.webresources.Cache.getResource Unable to add the resource at [/WEB-INF/classes/alfresco/templates/org/alfresco/dashboard.ftl] to the cache for web application [/share] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
-
-	By default value is 10240 kbytes, even when not added to context.xml. so either increase it:
-	e.g.: <Resources cacheMaxSize="51200" />
-
-	Or disable it: <Resources cachingAllowed="false" />
-   -->
 
    <Resources cachingAllowed="false" />
+
 </Context>

@@ -143,6 +143,7 @@ LOG4J_PROPS=$SOLR_LOGS_DIR/log4j.properties
 #  -DzkDigestReadonlyUsername=readonly-user -DzkDigestReadonlyPassword=CHANGEME-READONLY-PASSWORD"
 #SOLR_OPTS="$SOLR_OPTS $SOLR_ZK_CREDS_AND_ACLS"
 
+
 SOLR_SOLR_HOST=localhost
 SOLR_SOLR_PORT=8983
 SOLR_SOLR_BASEURL=/solr
@@ -152,3 +153,5 @@ SOLR_ALFRESCO_BASEURL=/alfresco
 
 #Since we are setting up with no SSL, this property need to be set to none. Default is https
 SOLR_ALFRESCO_SECURECOMMS=none
+
+

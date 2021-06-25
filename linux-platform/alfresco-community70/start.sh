@@ -43,8 +43,6 @@ fi
 #User need to pass this param on initial startup in order to create the cores. if core values are not passed then default 'alfresco and archive' will be used.
 SOLR_CORES=${3:-"alfresco,archive"}
 
-#Start pgAdmin4 ?, Default to 'true'
-START_PGADMIN=${4:-"true"}
 
 JAVA_OPTS="-Xms3G -Xmx4G -Xss1024k"
 JAVA_OPTS="${JAVA_OPTS} -XX:+UseG1GC -XX:+UseStringDeduplication"
@@ -115,18 +113,6 @@ StartDB() {
 	else
 	   echo "Failed to start postgresql-13.service!"
 	   exit 1
-        fi
-
-        if [[ $START_PGADMIN == true ]]; then
-            # Start pgAdmin4 as well
-	    sudo systemctl start httpd
-	    if [[ $? = 0 ]]
-	    then
-		echo "pgAdmin4 httpd service started successfully."
-	    else
-		echo "Failed to start pgAdmin4 httpd service!"
-		exit 1
-	    fi
         fi
 }
 
