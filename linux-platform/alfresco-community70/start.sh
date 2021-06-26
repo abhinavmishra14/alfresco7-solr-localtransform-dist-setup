@@ -33,6 +33,7 @@ if [[ "$PATH" == *"$ALF_HOME"* ]]; then
   echo "$ALF_HOME already set in PATH variable."
 else
   export PATH=$PATH:$ALF_HOME
+
 fi
 
 # Check if SOLR_HOME is set in path variable or not, we may need it for executing shell scripts as needed.
@@ -65,6 +66,7 @@ echo JAVA_OPTS: $JAVA_OPTS
 echo SOLR_HOME: $SOLR_HOME
 echo ALF_HOME: $ALF_HOME
 echo PATH: $PATH
+echo JAVA_TOOL_OPTIONS: $JAVA_TOOL_OPTIONS
 echo "-------------------------------------------"
 
 
