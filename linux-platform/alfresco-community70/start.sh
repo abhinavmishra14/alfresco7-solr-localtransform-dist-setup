@@ -85,24 +85,15 @@ StartAMQ() {
 }
 
 StartLocalTransformService() {
-	printf "\nStarting LocalTransformService... \n"
+    printf "\nInvoking local transformation service startup script... \n"
 	# Check for more info: https://docs.alfresco.com/transform-service/latest/install/#install-with-zip
-	
-	java -DPDFRENDERER_EXE="$ALF_HOME/alfresco-pdf-renderer/alfresco-pdf-renderer" \
-	 -DLIBREOFFICE_HOME="$ALF_HOME/libreoffice" \
-	 -DIMAGEMAGICK_ROOT="$ALF_HOME/imagemagick" \
-	 -DIMAGEMAGICK_DYN="$ALF_HOME/imagemagick" \
-	 -DIMAGEMAGICK_EXE="$ALF_HOME/imagemagick/convert" \
-	 -DIMAGEMAGICK_CODERS="$ALF_HOME/imagemagick/modules-Q16HDRI/coders" \
-	 -DIMAGEMAGICK_CONFIG="$ALF_HOME/imagemagick/config-Q16HDRI" \
-	 -DACTIVEMQ_URL=failover:(tcp://localhost:61616)?timeout=3000 \
-	 -jar $ALF_HOME/bin/alfresco-transform-core-aio-boot-2.4.0.jar
+	sudo -u alfresco $ALF_HOME/localTransformationService.sh start
 
 	if [[ $? = 0 ]]
 	then
-           echo "localTransformService service started successfully."
+           echo "localTransformService script executed successfully."
 	else
-	   echo "Failed to start localTransformService service!"
+	   echo "Failed to execute localTransformService script!"
 	   exit 1
         fi
 }
