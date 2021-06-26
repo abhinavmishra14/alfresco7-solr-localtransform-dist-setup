@@ -66,7 +66,6 @@ echo JAVA_OPTS: $JAVA_OPTS
 echo SOLR_HOME: $SOLR_HOME
 echo ALF_HOME: $ALF_HOME
 echo PATH: $PATH
-echo JAVA_TOOL_OPTIONS: $JAVA_TOOL_OPTIONS
 echo "-------------------------------------------"
 
 
