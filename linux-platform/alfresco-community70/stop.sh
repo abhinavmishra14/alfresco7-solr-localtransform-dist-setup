@@ -111,7 +111,7 @@ StopSOLR() {
 
 StopAMQ() {
 	printf "\nStopping ActiveMQ... \n"
-	sudo sudo systemctl stop activemq
+	sudo systemctl stop activemq
 	
 	if [[ $? = 0 ]]
 	then

@@ -55,9 +55,6 @@ JAVA_OPTS="${JAVA_OPTS} -Djava.io.tmpdir=${CATALINA_TMPDIR}"
 JAVA_OPTS="${JAVA_OPTS} -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
 JAVA_OPTS="${JAVA_OPTS} -Dalfresco.home=${ALF_HOME} -Dcom.sun.management.jmxremote=true"
 JAVA_OPTS="${JAVA_OPTS} -server"
-#Used for metadata keystore. Added here as well apart from catalina.sh in case you want to use this startup script,
-#and modify the dir.keystore path here.
-JAVA_TOOL_OPTIONS="-Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=${dir.keystore}/metadata-keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede"
 
 
 echo "-------------------------------------------"
@@ -73,7 +70,7 @@ echo "-------------------------------------------"
 
 StartAMQ() {
 	printf "\nStarting ActiveMQ... \n"
-	sudo sudo systemctl start activemq
+	sudo systemctl start activemq
 	
 	if [[ $? = 0 ]]
 	then
