@@ -55,8 +55,17 @@ echo PATH: $PATH
 echo "---------------------------------------------"
 
 StopLocalTransformService() {
-   printf "\nStopping LocalTransformService... \n"
+    printf "\nInvoking local transformation service stop script... \n"
+	# Check for more info: https://docs.alfresco.com/transform-service/latest/install/#install-with-zip
+	sudo -u alfresco $ALF_HOME/localTransformationService.sh stop
 
+	if [[ $? = 0 ]]
+	then
+           echo "localTransformService script executed successfully."
+	else
+	   echo "Failed to execute localTransformService script!"
+	   exit 1
+        fi
 }
 
 StopACS() {
