@@ -1,1 +1,0 @@
-#This folder is for keeping utility jar files. e.g. postgres jdbc connector.

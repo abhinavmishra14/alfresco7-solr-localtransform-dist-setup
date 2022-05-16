@@ -134,5 +134,9 @@ set SOLR_ALFRESCO_HOST=localhost
 set SOLR_ALFRESCO_PORT=8080
 set SOLR_ALFRESCO_BASEURL=/alfresco
 
-:: Since we are setting up with no SSL, this property need to be set to none. Default is https
-set SOLR_ALFRESCO_SECURECOMMS=none
+:: Since we are setting up with no SSL, this property need to be set to secret. Default is https
+set SOLR_ALFRESCO_SECURECOMMS=secret
+
+rem ACS72 shared secret changes [Start] ##############
+set JAVA_TOOL_OPTIONS=-Dalfresco.secureComms.secret=secret
+rem ACS72 shared secret changes [Start] ##############

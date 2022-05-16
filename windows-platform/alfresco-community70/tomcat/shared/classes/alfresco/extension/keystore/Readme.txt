@@ -1,1 +1,0 @@
-Location for metadata-keystore 

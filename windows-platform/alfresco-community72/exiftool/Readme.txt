@@ -1,0 +1,1 @@
+#This folder is for keeping the exiftool executable which is consumed by local transfromation service for TIKA transformations

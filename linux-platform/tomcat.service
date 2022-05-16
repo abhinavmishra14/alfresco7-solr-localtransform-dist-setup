@@ -8,15 +8,15 @@ Type=forking
 Restart=always
 
 Environment=JAVA_HOME=/usr/lib/jvm/jre
-Environment=CATALINA_PID=/usr/local/alfresco-community70/tomcat/temp/tomcat.pid
-Environment=CATALINA_HOME=/usr/local/alfresco-community70/tomcat
-Environment=CATALINA_BASE=/usr/local/alfresco-community70/tomcat
+Environment=CATALINA_PID=/usr/local/alfresco-community72/tomcat/temp/tomcat.pid
+Environment=CATALINA_HOME=/usr/local/alfresco-community72/tomcat
+Environment=CATALINA_BASE=/usr/local/alfresco-community72/tomcat
 Environment='CATALINA_OPTS=-Xms3G -Xmx4G -Xss1024k -server -XX:+UseParallelGC'
 Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
 
-ExecStart=/usr/local/alfresco-community70/tomcat/bin/startup.sh
+ExecStart=/usr/local/alfresco-community72/tomcat/bin/startup.sh
 ExecStop=/bin/kill -15 $MAINPID
-WorkingDirectory=/usr/local/alfresco-community70/tomcat
+WorkingDirectory=/usr/local/alfresco-community72/tomcat
 User=alfresco
 Group=Alfresco
 
