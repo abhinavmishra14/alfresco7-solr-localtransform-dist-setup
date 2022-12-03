@@ -156,4 +156,8 @@ SOLR_ALFRESCO_SECURECOMMS=secret
 
 #ACS72 Shared secret [Start] ##############
 export JAVA_TOOL_OPTIONS="-Dalfresco.secureComms.secret=secret"
+
+############ OR Instead of JAVA_TOOL_OPTIONS, you can also export SOLR_OPTS , example below. Make sure you dont export both###
+#export SOLR_OPTS="-Dalfresco.secureComms.secret=secret"
+
 #ACS72 Shared secret [End] ##############
